@@ -1,0 +1,135 @@
+import csv
+import itertools
+from typing import List, Tuple
+ 
+def get_parameter_range(param_name: str, param_type: str) -> List:
+    """
+    Get parameter range from user input
+    """
+    print(f"\n--- {param_name.upper()} Parameter ---")
+    
+    if param_type == "int":
+        start = int(input(f"Enter starting {param_name}: "))
+        end = int(input(f"Enter ending {param_name}: "))
+        step = int(input(f"Enter step size for {param_name} (0 for single value): "))
+        
+        if step == 0:
+            return [start]  # Return only the starting value
+        else:
+            return list(range(start, end + 1, step))
+    
+    elif param_type == "float":
+        start = float(input(f"Enter starting {param_name}: "))
+        end = float(input(f"Enter ending {param_name}: "))
+        step = float(input(f"Enter step size for {param_name} (0 for single value): "))
+        
+        if step == 0:
+            return [round(start, 3)]  # Return only the starting value
+        else:
+            # Generate float range with 3 decimal precision
+            values = []
+            current = start
+            while current <= end + 1e-10:  # Small epsilon for floating point comparison
+                values.append(round(current, 3))
+                current += step
+            return values
+ 
+def generate_command_sequences():
+    """
+    Main function to generate command sequences
+    """
+    print("=== Experimental Command Generator ===")
+    print("This program will generate all combinations of your parameter space.")
+    print("Parameters: Frequency (Hz), Voltage (V), Flow (units)")
+    
+    # Get parameter ranges from user
+    frequency_range = get_parameter_range("frequency (0-100K Hz)", "int")
+    voltage_range = get_parameter_range("voltage", "float")
+    flow_range = get_parameter_range("flow", "float")
+    
+    # Generate all combinations
+    print("\nGenerating parameter combinations...")
+    combinations = list(itertools.product(frequency_range, voltage_range, flow_range))
+    
+    print(f"Total combinations: {len(combinations)}")
+    
+    # Get output filename
+    output_file = input("\nEnter output CSV filename (without .csv extension): ") + ".csv"
+    
+    # Write to CSV file
+    with open(output_file, 'w', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        
+        # Write data rows (no header)
+        for i, (freq, volt, flow) in enumerate(combinations, 1):
+            writer.writerow([freq, f"{volt:.3f}", f"{flow:.3f}"])
+    
+    print(f"\nCSV file '{output_file}' has been generated successfully!")
+    print(f"Contains {len(combinations)} parameter combinations.")
+    
+    # Display first few rows as preview
+    print("\nPreview of first 5 rows:")
+    print("Frequency (Hz) | Voltage (V) | Flow")
+    print("-" * 40)
+    for i, (freq, volt, flow) in enumerate(combinations[:5]):
+        print(f"{freq:12d} | {volt:10.3f} | {flow:7.3f}")
+    
+    if len(combinations) > 5:
+        print("...")
+ 
+def preview_parameter_space():
+    """
+    Preview how many combinations will be generated before creating the file
+    """
+    print("\n=== Parameter Space Preview ===")
+    
+    # Get ranges for preview
+    freq_start = int(input("Frequency start: "))
+    freq_end = int(input("Frequency end: "))
+    freq_step = int(input("Frequency step: "))
+    
+    volt_start = float(input("Voltage start: "))
+    volt_end = float(input("Voltage end: "))
+    volt_step = float(input("Voltage step: "))
+    
+    flow_start = float(input("Flow start: "))
+    flow_end = float(input("Flow end: "))
+    flow_step = float(input("Flow step: "))
+    
+    # Calculate number of values for each parameter
+    freq_count = 1 if freq_step == 0 else len(range(freq_start, freq_end + 1, freq_step))
+    
+    if volt_step == 0:
+        volt_count = 1
+    else:
+        volt_count = len([x for x in [volt_start + i * volt_step for i in range(int((volt_end - volt_start) / volt_step) + 1)] if x <= volt_end + 1e-10])
+    
+    if flow_step == 0:
+        flow_count = 1
+    else:
+        flow_count = len([x for x in [flow_start + i * flow_step for i in range(int((flow_end - flow_start) / flow_step) + 1)] if x <= flow_end + 1e-10])
+    
+    total_combinations = freq_count * volt_count * flow_count
+    
+    print(f"\nParameter counts:")
+    print(f"Frequency values: {freq_count}")
+    print(f"Voltage values: {volt_count}")
+    print(f"Flow values: {flow_count}")
+    print(f"Total combinations: {total_combinations}")
+    
+    return input("\nProceed with generation? (y/n): ").lower() == 'y'
+ 
+if __name__ == "__main__":
+    print("Choose an option:")
+    print("1. Generate command sequences")
+    print("2. Preview parameter space first")
+    
+    choice = input("Enter choice (1 or 2): ")
+    
+    if choice == "2":
+        if preview_parameter_space():
+            generate_command_sequences()
+        else:
+            print("Generation cancelled.")
+    else:
+        generate_command_sequences()
