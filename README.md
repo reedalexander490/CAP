@@ -35,6 +35,9 @@ Currently, there are no guidelines for contributions, as this project is proprie
 This project does not have a specified license.
 
 ## Additional Information
+Schematic:
+<img width="653" height="470" alt="image" src="https://github.com/user-attachments/assets/27a62ee0-9573-4746-ac6e-130ea157a8f6" />
+
 Final circuit with improved passive cooling and new fan placement:
 
 <img width="3072" height="4080" alt="image" src="https://github.com/user-attachments/assets/5c1b3522-7638-4635-9a93-fabf8a3a556e" />
