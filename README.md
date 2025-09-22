@@ -1,6 +1,9 @@
 # Cold Atmospheric Plasma
+
 <img width="3072" height="4080" alt="image" src="https://github.com/user-attachments/assets/d01bc787-83c1-4402-9f5e-65291f083884" />
+
 ## Description
+
 This project involves an experimental setup designed to automatically control the voltage, flow rate, location, and frequency of a cold atmospheric plasma jet. The system aims to facilitate research in the field of plasma technology for educational purposes.
 
 ## Technologies Used
