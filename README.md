@@ -39,6 +39,7 @@ This project does not have a specified license.
 
 ## Additional Information
 Schematic:
+
 <img width="653" height="470" alt="image" src="https://github.com/user-attachments/assets/27a62ee0-9573-4746-ac6e-130ea157a8f6" />
 
 Final circuit with improved passive cooling and new fan placement:
@@ -49,6 +50,10 @@ Prototype board used to verify reliability before PCB manufacturing and it's the
 
 <img width="477" height="343" alt="image" src="https://github.com/user-attachments/assets/8ad342ff-970a-4a13-9dd1-6c20f0eafa52" />
 <img width="362" height="440" alt="image" src="https://github.com/user-attachments/assets/b77cd912-5d5d-4f42-8e11-1210863c60b8" />
+
+Example output spectra (Intensity vs Wavelength):
+
+<img width="449" height="416" alt="image" src="https://github.com/user-attachments/assets/cd822cfb-5cdf-4583-9a5a-0a458883b370" />
 
 
 
